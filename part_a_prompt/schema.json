@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GuestMessageClassification",
+  "description": "Structured routing output for a single guest message.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["intent", "entities", "confidence", "needs_human"],
+  "properties": {
+    "intent": {
+      "description": "Closed enum of routable intents.",
+      "type": "string",
+      "enum": [
+        "booking_inquiry",
+        "maintenance_request",
+        "extension_request",
+        "payment_question",
+        "out_of_scope",
+        "unknown"
+      ]
+    },
+    "entities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dates", "location", "unit_type", "urgency"],
+      "properties": {
+        "dates": {
+          "description": "Dates mentioned, normalized to ISO-8601 (YYYY-MM-DD).",
+          "type": "array",
+          "items": { "type": "string", "format": "date" }
+        },
+        "location": {
+          "description": "Area/building mentioned, e.g. 'Kemang'. Null if absent.",
+          "type": ["string", "null"]
+        },
+        "unit_type": {
+          "description": "Normalized unit type. Null if absent.",
+          "type": ["string", "null"],
+          "enum": ["studio", "1br", "2br", "3br", null]
+        },
+        "urgency": {
+          "description": "Routing priority inferred from the message.",
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        }
+      }
+    },
+    "confidence": {
+      "description": "Model self-reported confidence, 0.0-1.0.",
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "needs_human": {
+      "description": "True when low confidence, ambiguous, or out_of_scope.",
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# Optional: only needed if you want to run the service with REPO_BACKEND=mongo.
+# The default backend is in-memory, so this file is NOT required to run or test.
+#
+#   docker compose up -d
+#   REPO_BACKEND=mongo uvicorn app.main:app --reload
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

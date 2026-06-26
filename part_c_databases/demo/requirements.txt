@@ -1,0 +1,3 @@
+# Only needed for the C2 demo (run_c2_mongomock.py).
+# The C1 demo uses Python's built-in sqlite3 and needs nothing extra.
+mongomock>=4.1
