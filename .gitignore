@@ -16,3 +16,7 @@ venv/
 Thumbs.db
 .idea/
 .vscode/
+
+# Personal interview-prep notes — must NOT be pushed to the public submission repo
+INTERVIEW_PREP.*
+scripts/md_to_pdf.py
