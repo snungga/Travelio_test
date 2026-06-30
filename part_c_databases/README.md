@@ -6,29 +6,45 @@
 | C2 (MongoDB) | [`c2_mongo_messages_per_intent_per_day.js`](c2_mongo_messages_per_intent_per_day.js) | [`appendix2_messages_seed.js`](appendix2_messages_seed.js) | [`demo/run_c2_mongomock.py`](demo/run_c2_mongomock.py) |
 | C3 / C4 | reasoning below | — | — |
 
-## Running the demos
-The `.sql` / `.js` files are the deliverables (paste into MySQL / `mongosh`). The
-`demo/` scripts let you **run C1 and C2 in pure Python without any DB server**, so
-the output can be verified directly.
+## How to run
 
+There are two ways to use this part:
+
+**Option A — just read the answers.** The `.sql` / `.js` files are the actual
+deliverables. If you have a real MySQL / MongoDB, paste them in (run the
+`appendix2_*` seed file first, then the `c1` / `c2` query).
+
+**Option B — run the demos (recommended, no database needed).** The `demo/`
+scripts run C1 and C2 in **pure Python**, so you can see the real output without
+installing any database server.
+
+### C1 demo — no install needed
 ```bash
-# C1 — uses Python's built-in sqlite3, nothing to install
+# from the project root (travelio-ai-test/)
 python part_c_databases/demo/run_c1_sqlite.py
+```
+Uses Python's built-in SQLite. **Expected output:** a table where `2br` averages
+**~666,688** instead of 1,000,000 — because one seeded booking is a partner row in
+**USD** summed together with IDR rows. That is the C3 "currency trap" made visible.
 
-# C2 — needs mongomock (in-memory Mongo)
-pip install -r part_c_databases/demo/requirements.txt
+### C2 demo — one small install
+```bash
+# from the project root (travelio-ai-test/)
+pip install -r part_c_databases/demo/requirements.txt   # installs mongomock
 python part_c_databases/demo/run_c2_mongomock.py
 ```
+Uses an in-memory fake MongoDB. **Expected output:** a count of messages per day
+and per intent for the last 7 days; a 10-day-old message is correctly excluded.
 
-Expected highlights: C1 shows `2br` averaging **~666,688** instead of 1,000,000 —
-because seed booking #7 is a `partner_x` row in **USD** summed alongside IDR, the
-exact C3 currency trap made visible. C2 buckets messages by day/intent for the last
-7 days and excludes a 10-day-old message.
+> **Why the demo code differs slightly from the `.sql`/`.js` answers:** the demos
+> use SQLite and a fake Mongo, which speak a slightly different dialect. The C1 demo
+> swaps MySQL's `DATEDIFF`/`INTERVAL` for SQLite's `julianday()`/`date('now', ...)`,
+> and the C2 demo uses `$dateToString` because the fake Mongo doesn't support
+> `$dateTrunc`. The logic is identical; the canonical `.sql`/`.js` files keep the
+> proper MySQL / MongoDB form.
 
-> Dialect notes: the C1 demo translates MySQL `DATEDIFF`/`INTERVAL` to SQLite
-> `julianday()`/`date('now', ...)`; the C2 demo uses `$dateToString` because
-> mongomock doesn't implement `$dateTrunc` (equivalent for daily buckets). The
-> canonical files keep the idiomatic MySQL / MongoDB forms.
+### C3 and C4
+These are **reasoning-only** (no code to run) — read the explanations below.
 
 ---
 

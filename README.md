@@ -12,11 +12,15 @@ production-ish FastAPI service (Part B), plus written deliverables on databases
 | Path | What's there |
 |------|--------------|
 | [`part_a_prompt/`](part_a_prompt/) | The shippable prompt (`prompt.py`), JSON schema, and iteration notes |
-| [`app/`](app/) | **Part B** — the FastAPI service |
+| [`app/`](app/) | **Part B** — the FastAPI service ([app/README.md](app/README.md) has its own run guide) |
 | [`tests/`](tests/) | Unit + endpoint tests (happy / malformed / timeout paths) |
 | [`part_c_databases/`](part_c_databases/) | C1 MySQL, C2 MongoDB, C3 root-cause, C4 ClickHouse |
 | [`part_d_eval/`](part_d_eval/) | Eval set, metrics, regression, monitoring |
 | [`part_e_pipeline/`](part_e_pipeline/) | Daily Dagster pipeline design |
+
+> Each part folder that contains code has its own **README with a "How to run"
+> section**: [Part A](part_a_prompt/README.md), [Part B](app/README.md),
+> [Part C](part_c_databases/README.md).
 
 ## How to run
 

@@ -1,5 +1,27 @@
 # Part A — Prompt Engineering & Structured Extraction
 
+## How to run / try it
+This part is mostly a **prompt** (text) plus a **schema** (the required output
+shape). There is one small runnable helper that prints the final prompt so you can
+see exactly what would be sent to the LLM.
+
+```bash
+# from the project root (travelio-ai-test/)
+python part_a_prompt/prompt.py
+```
+
+Expected: it prints the fully rendered prompt (ROLE / TASK / CONTEXT / OUTPUT
+FORMAT / EXAMPLES) for a sample message. Edit the `sample = "..."` line at the
+bottom of [`prompt.py`](prompt.py) to preview a different message.
+
+> Nothing to install for this — it uses only the Python standard library. The same
+> `build_prompt()` function is what Part B's service calls on every request, so the
+> prompt you preview here is exactly the prompt that gets deployed.
+
+Files in this folder:
+- [`prompt.py`](prompt.py) — the prompt template + `build_prompt()` (runnable preview).
+- [`schema.json`](schema.json) — the required JSON output shape (JSON Schema).
+
 ## Deliverable 1 — The prompt
 The full, shippable prompt lives in [`prompt.py`](prompt.py) as `PROMPT_TEMPLATE`,
 rendered by `build_prompt(message, context, today)`. It uses an explicit
